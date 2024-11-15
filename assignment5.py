@@ -75,8 +75,8 @@ print(f"Result 4: {result4}")
 
 # exercise 5
 np.random.seed(1)
-input_team8 = np.random.uniform(-0.6, 0.6, (100, 3))
-output_team8 = (input_team8[:, 0] + input_team8[:, 1] + input_team8[:, 2]).reshape(100, 1)
+input_team8 = np.random.uniform(-0.6, 0.6, (10, 3))
+output_team8 = (input_team8[:, 0] + input_team8[:, 1] + input_team8[:, 2]).reshape(10, 1)
 
 input_range = [[-0.6, 0.6], [-0.6, 0.6], [-0.6, 0.6]]
 net = nl.net.newff(input_range, [6, 1])
@@ -90,6 +90,7 @@ test_input = np.array([[0.2, 0.1, 0.2]])
 result5 = net.sim(test_input)
 print(f"Result 5: {result5}")
 
+# exercise 6
 np.random.seed(1)
 input_team8 = np.random.uniform(-0.6, 0.6, (100, 3))
 output_team8 = (input_team8[:, 0] + input_team8[:, 1] + input_team8[:, 2]).reshape(100, 1)
@@ -106,4 +107,4 @@ training_error = net.train(input_team8, output_team8, epochs=epochs, show=show, 
 
 test_input = np.array([[0.2, 0.1, 0.2]])
 result6 = net.sim(test_input)
-print(f"Result 6: {result6}")
+print(f"Result 6: {result6}") 
