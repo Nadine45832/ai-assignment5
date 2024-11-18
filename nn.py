@@ -2,6 +2,10 @@ import numpy as np
 import neurolab as nl
 import matplotlib.pyplot as plt
 
+MIN_VALUE = -0.6
+MAX_VALUE = 0.6
+MIN_MAX_RANGE = [-0.6, 0.6]
+
 
 def plot_errors(error_progress):
     plt.figure()
@@ -15,7 +19,7 @@ def plot_errors(error_progress):
 def training_data(amount=10):
     np.random.seed(1)
     # generate 2 features with values drawn from a uniform distribution between -0.6 and 0.6
-    input = np.random.uniform(-0.6, 0.6, size=(amount, 2))
+    input = np.random.uniform(MIN_VALUE, MAX_VALUE, size=(amount, 2))
 
     # generate target data
     output = np.array([[els[0] + els[1]] for els in input])
@@ -26,7 +30,7 @@ def training_data(amount=10):
 def training_three_input_data(amount=10):
     np.random.seed(1)
     # generate 3 features with values drawn from a uniform distribution between -0.6 and 0.6
-    input = np.random.uniform(-0.6, 0.6, size=(amount, 3))
+    input = np.random.uniform(MIN_VALUE, MAX_VALUE, size=(amount, 3))
 
     # generate target data
     output = np.array([[els[0] + els[1] + els[2]] for els in input])
@@ -35,12 +39,12 @@ def training_three_input_data(amount=10):
 
 
 def single_layer_nn(input, output):
-    dim_min_1, dim_max_1 = input[:, 0].min(), input[:, 0].max()
-    dim_min_2, dim_max_2 = input[:, 1].min(), input[:, 1].max()
+    nn = nl.net.newff([MIN_MAX_RANGE, MIN_MAX_RANGE], [6, 1])
 
-    nn = nl.net.newff([[dim_min_1, dim_max_1], [dim_min_2, dim_max_2]], [6, 1])
+    # nn.trainf = nl.train.train_gd
+    # print(nn.trainf)
 
-    errors_progress = nn.train(input, output, show=15, goal=0.00001)
+    errors_progress = nn.train(input, output, show=15, goal=0.00001, epochs=1000)
 
     plot_errors(errors_progress)
 
@@ -48,11 +52,7 @@ def single_layer_nn(input, output):
 
 
 def three_input_single_layer_nn(input, output):
-    dim_min_1, dim_max_1 = input[:, 0].min(), input[:, 0].max()
-    dim_min_2, dim_max_2 = input[:, 1].min(), input[:, 1].max()
-    dim_min_3, dim_max_3 = input[:, 2].min(), input[:, 2].max()
-
-    nn = nl.net.newff([[dim_min_1, dim_max_1], [dim_min_2, dim_max_2], [dim_min_3, dim_max_3]], [6, 1])
+    nn = nl.net.newff([MIN_MAX_RANGE, MIN_MAX_RANGE, MIN_MAX_RANGE], [6, 1])
 
     errors_progress = nn.train(input, output, show=15, goal=0.00001)
 
@@ -62,10 +62,7 @@ def three_input_single_layer_nn(input, output):
 
 
 def multi_layer_nn(input, output):
-    dim_min_1, dim_max_1 = input[:, 0].min(), input[:, 0].max()
-    dim_min_2, dim_max_2 = input[:, 1].min(), input[:, 1].max()
-
-    nn = nl.net.newff([[dim_min_1, dim_max_1], [dim_min_2, dim_max_2]], [5, 3, 1])
+    nn = nl.net.newff([MIN_MAX_RANGE, MIN_MAX_RANGE], [5, 3, 1])
 
     nn.trainf = nl.train.train_gd
 
@@ -77,11 +74,7 @@ def multi_layer_nn(input, output):
 
 
 def three_input_multi_layer_nn(input, output):
-    dim_min_1, dim_max_1 = input[:, 0].min(), input[:, 0].max()
-    dim_min_2, dim_max_2 = input[:, 1].min(), input[:, 1].max()
-    dim_min_3, dim_max_3 = input[:, 2].min(), input[:, 2].max()
-
-    nn = nl.net.newff([[dim_min_1, dim_max_1], [dim_min_2, dim_max_2], [dim_min_3, dim_max_3]], [5, 3, 1])
+    nn = nl.net.newff([MIN_MAX_RANGE, MIN_MAX_RANGE, MIN_MAX_RANGE], [5, 3, 1])
 
     nn.trainf = nl.train.train_gd
 
